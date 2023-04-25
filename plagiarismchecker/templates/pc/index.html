@@ -106,14 +106,10 @@
 			    </ul>
 			</h5>
 </div>
-    
 			<hr>
-    <h3 class="container">To use this plagiarism checker, please copy and paste your text in the box below, then click on the “Check Plagiarism” button, sit back and watch as your article undergoes a free plagiarism scan.
-      
+    <h3 class="container">To use this plagiarism checker, please copy and paste your text in the box below, then click on the “Check Plagiarism” button, sit back and watch as your article undergoes a free plagiarism scan.   
     </h3>
-    <hr>
-    
-   
+    <hr>  
    </div> 
    <hr>
    <div class="content-1 container" style="margin: 10px auto;">
@@ -135,14 +131,14 @@
           <div class="tab-pane fade show active" id="text-input-ws" role="tabpanel" aria-labelledby="text-tab">          
             <form id="form1-ws" action="/test/#taru" method="POST">
               {% csrf_token %}               
-              <textarea onchange="word_checker()" maxlength="" id="text-1" name="q" placeholder="Copy Paste the text here.." required></textarea>
+              <textarea oninput="word_checker()" maxlength="" id="text-1" name="q" placeholder="Copy Paste the text here.." required></textarea>
                 </form>
               <p id="ch">1500 Words Remaining</p>
           </div>        
           <div class="tab-pane fade" id="file-input-ws" role="tabpanel" aria-labelledby="file-tab">
-            <form id="form2-ws" action="/filetest/" enctype="multipart/form-data" method="POST">
+            <form id="form2-ws" action="/filetest/#taru" enctype="multipart/form-data" method="POST">
             {% csrf_token %}
-            <input id="id_docfile" required type="file" name="docfile" />
+            <input id="id_docfile" required type="file" name="docfile" accept=".doc, .docx, .pdf, .txt" />
               </form>
           </div>
         </div>
@@ -201,6 +197,7 @@
         document.getElementById("ch").innerHTML = 1500 - num_words + " Words Remaining";
       }
     }
+
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <!-- JQuery -->

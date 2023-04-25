@@ -7,7 +7,7 @@ import re
 # characters (using Unicode definition of alphanumeric).
 
 def getQueries(text, n):
-    sentenceEnders = re.compile("['.!?]")
+    sentenceEnders = re.compile("['.,()/!?]")
     sentenceList = sentenceEnders.split(text)
     sentencesplits = []
     en_stops = set(stopwords.words('english'))
@@ -76,6 +76,7 @@ def findSimilarity(text):
             outputLink[prevlink] = outputLink[prevlink] + percentage
         elif c[link] == 1:
             totalPercent = totalPercent + percentage
+        totalPercent = round(totalPercent, 2)
         print(link, totalPercent)
 
     print(count, numqueries)
