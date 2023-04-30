@@ -37,19 +37,22 @@ def filetest(request):
 
     elif str(request.FILES['docfile']).endswith(".pdf"):
         # creating a pdf file object 
-        pdfFileObj = open(request.FILES['docfile'], 'rb') 
+        pdfFileObj = open(request.FILES['docfile'], 'rb')
 
         # creating a pdf reader object 
-        pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
+        pdfReader = PyPDF2.PdfReader(pdfFileObj)
 
-        # printing number of pages in pdf file 
-        print(pdfReader.numPages) 
+       # print number of pages in the pdf file
+        print("Page Number:", pdfReader.numPages)
 
         # creating a page object 
         pageObj = pdfReader.getPage(0) 
 
-        # extracting text from page 
-        print(pageObj.extractText()) 
+        # extract text from page
+        value = pageObj.extractText()
+        value = str(request.FILES['docfile'].read())
+        # print(pageObj.extractText()) 
+        print(value)
 
         # closing the pdf file object 
         pdfFileObj.close() 
