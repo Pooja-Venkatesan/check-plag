@@ -1,6 +1,8 @@
 from plagiarismchecker.algorithm import ConsineSim
 from googleapiclient.discovery import build
 
+# searchEngine_API = 'AIzaSyB-htAtka2OIP-F0NSL7EaCaeRjMH1bhRA'
+# searchEngine_API = 'AIzaSyB-htAtka2OIP-F0NSL7EaCaeRjMH1bhRA'
 searchEngine_API = 'AIzaSyB-htAtka2OIP-F0NSL7EaCaeRjMH1bhRA'
 # searchEngine_API = 'AIzaSyAoEYif8sqEYvj1P6vYLw6CGMrQbDMmaq8' 
 # searchEngine_API = 'AIzaSyCUYy9AtdMUddiNA0gOcsGPQcE372ytyCw'
