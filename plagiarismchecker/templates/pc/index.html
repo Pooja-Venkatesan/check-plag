@@ -137,15 +137,27 @@
           </div>        
           <div class="tab-pane fade" id="file-input-ws" role="tabpanel" aria-labelledby="file-tab">
             <form id="form2-ws" action="/filetest/#taru" enctype="multipart/form-data" method="POST">
+              <p id="file-result"></p>
             {% csrf_token %}
-            <input id="id_docfile" required type="file" name="docfile" accept=".doc, .docx, .pdf, .txt" />
+            <input id="id_docfile" required type="file" name="docfile" accept=".doc, .docx, .pdf, .txt"/>
               </form>
           </div>
         </div>
       </div>
       <div class="col-md-9">
-      <button type="submit" form="form1-ws" id="submit-button-1" class="btn" style="background-color:#6c56e6; font-weight: bold;"><h6>Check Plagiarism</h6></button>
-      <button type="submit" form="form2-ws" id="submit-button-2" class="btn submit-button-2" style="background-color:#6c56e6; font-weight: bold;"><h6>Check Plagiarism</h6></button>  
+      <button type="submit" form="form1-ws" id="submit-button-1" class="btn" style="background-color:#6c56e6; font-weight: bold;">
+        <h6>Check Plagiarism</h6>
+      </button>
+      <button type="submit" form="form2-ws" id="submit-button-2" class="btn submit-button-2" style="background-color:#6c56e6; font-weight: bold;">
+        <h6>Check Plagiarism</h6>
+      </button>  
+
+      <button type="submit" form="form1-ws" id="submit-button-1" class="btn" style="background-color:#56b4e6; font-weight: bold;">
+        <h6>Plagiarism Report</h6>
+      </button>
+      <button type="submit" form="form2-ws" id="submit-button-2" class="btn submit-button-2" style="background-color:#56b4e6;  font-weight: bold;">
+        <h6>Plagiarism Report</h6>
+      </button>
       </div>  
     </div>
     <div class="container-fluid result-div">
@@ -156,11 +168,50 @@
           <ul class="output-list-1" style="list-style:square; text-align: justify;">
             {% for links in link %}            
               <li><a href="{{ links }}" style="text-decoration:underline; color: #6c56e6;">{{ links }}</a></li>
-            {% endfor %}
+              {% endfor %}
+              <hr>
+              <h5>{{ text }}</h5>    
       </div>
       <div class="col-md-6 result-2" style="text-align: center; align-items: center;">
-        <p id="taru" class="output-per-tot">{{ percent }}%</p>
+        <p id="taru" class="output-per-tot">{{ totalPercent }}%</p>
         <h3 style="font-family: Arial black, Helvetica, sans-serif;">Plagiarized Content</h3>
+        <p id="taru" class="output-per-tot">{{ uniquePercent }}%</p>
+        <h3 style="font-family: Arial black, Helvetica, sans-serif;">Unique Content</h3>
+        <!-- <ul class="output-list-1" style="list-style:square; text-align: justify;">
+        <li> {{ text }}</li>    -->
+        
+      </div>
+      <hr>
+      <br>
+      <div> 
+      
+        <h3 style="color: #6c56e6;"> Your Input</h3>
+        <hr>
+        <h4 style="border: #606060;"> {{ text }}</h4> 
+       <table style="border: 1px solid black;">
+      
+          {% for key, value in tracker.items %}     
+              <tr>
+               <td style="color: red;">{{key}}</td>
+          
+              <td>
+                <ul class="output-list-1" style="list-style:square; text-align: justify;">
+                {% for links in link %}            
+                  <li><a href="{{ links }}" style="text-decoration:underline; color: #2549ff;">{{ links }}</a></li>
+                  {% endfor %}
+                  </ul>
+                  </td>
+             
+              </tr>          
+          {% endfor %}
+      </table>
+      <!-- <form id="form1-ws" action="\pc\report.html\">
+        <button type="submit" id="report" class="btn" style="background-color:#56b4e6; font-weight: bold;">
+          <h6>View Plagiarism Report</h6>
+        </button>
+      </form> -->
+      <!-- <button onclick="window.open('\pc\report.html');">View Plagiarism Report</button> -->
+
       </div>
       </div>
     </div>
@@ -197,7 +248,20 @@
         document.getElementById("ch").innerHTML = 1500 - num_words + " Words Remaining";
       }
     }
-
+// file-size limit
+// var MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+ 
+//  $(document).ready(function() {
+//      $('#id_docfile').change(function() {
+//          fileSize = this.files[0].size;
+//          if (fileSize > MAX_FILE_SIZE) {
+//              this.setCustomValidity("File must not exceed 5 MB!");
+//              this.reportValidity();
+//          } else {
+//              this.setCustomValidity("");
+//          }
+//      });
+//  });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <!-- JQuery -->

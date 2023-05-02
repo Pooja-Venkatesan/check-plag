@@ -3,6 +3,8 @@ from plagiarismchecker.algorithm import webSearch
 import sys
 import re
 
+from termcolor import colored
+
 # Given a text string, remove all non-alphanumeric
 # characters (using Unicode definition of alphanumeric).
 
@@ -38,14 +40,67 @@ def getQueries(text, n):
     return finalq
 
 
+# def findSimilarity(text):
+#     # n-grams N VALUE SET HERE
+#     n = 15
+#     queries = getQueries(text, n)
+#     print('GetQueries task complete')
+#     q = [' '.join(d) for d in queries]
+#     output = {}
+#     c = {}
+#     i = 1
+#     while("" in q):
+#         q.remove("")
+#     count = len(q)
+#     if count > 100:
+#         count = 100
+#     numqueries = count
+#     for s in q[0:count]:
+#         output, c, errorCount = webSearch.searchWeb(s, output, c)
+#         print('Web search task complete')
+#         numqueries = numqueries - errorCount
+#         # print(output,c)
+#         sys.stdout.flush()
+#         i = i+1
+#     totalPercent = 0
+#     outputLink = {}
+#     websiteMatches = {} # new dict to track website matches
+#     prevlink = ''
+#     for link in output:
+#         percentage = (output[link]*c[link]*100)/numqueries
+#         percentage = round(percentage, 2)
+#         if percentage > 10:
+#             totalPercent = totalPercent + percentage
+#             prevlink = link
+#             outputLink[link] = percentage
+#             websiteMatches[link] = [] # initialize list for current website
+#             for j, query in enumerate(queries):
+#                 if webSearch.isMatch(query, link):
+#                     websiteMatches[link].append(j) # add matching sentence index
+#         elif len(prevlink) != 0:
+#             totalPercent = totalPercent + percentage
+#             outputLink[prevlink] = outputLink[prevlink] + percentage
+#         elif c[link] == 1:
+#             totalPercent = totalPercent + percentage
+#         totalPercent = round(totalPercent, 2)
+#         print(link, totalPercent)
+
+#     print(count, numqueries)
+#     print(totalPercent, outputLink)
+#     print("\nDone!")
+#     return totalPercent, outputLink, websiteMatches, text
+
 def findSimilarity(text):
     # n-grams N VALUE SET HERE
     n = 15
     queries = getQueries(text, n)
+    print("queries")
+    print(queries)
     print('GetQueries task complete')
     q = [' '.join(d) for d in queries]
     output = {}
     c = {}
+    s = ''
     i = 1
     while("" in q):
         q.remove("")
@@ -53,15 +108,25 @@ def findSimilarity(text):
     if count > 100:
         count = 100
     numqueries = count
+    print("q")
+    print(q)
+    tracker={}
     for s in q[0:count]:
+        print("s")
+        print(s)
+        highlighted_text = colored(s, 'red', attrs=['underline', 'bold'])
+        print(highlighted_text)
         output, c, errorCount = webSearch.searchWeb(s, output, c)
         print('Web search task complete')
+        tracker[s]=c
         numqueries = numqueries - errorCount
-        # print(output,c)
+        print(output,c,errorCount)
         sys.stdout.flush()
         i = i+1
     totalPercent = 0
+    uniquePercent = 0
     outputLink = {}
+    print("output, c")
     print(output, c)
     prevlink = ''
     for link in output:
@@ -77,9 +142,21 @@ def findSimilarity(text):
         elif c[link] == 1:
             totalPercent = totalPercent + percentage
         totalPercent = round(totalPercent, 2)
-        print(link, totalPercent)
+        uniquePercent = (100 - totalPercent)
+        print(link, totalPercent, uniquePercent)
 
+    print("count", "numqueries")
     print(count, numqueries)
-    print(totalPercent, outputLink)
+    # print("totalPercent","uniquePercent", "outputLink")
+    # print(totalPercent,uniquePercent, outputLink)
     print("\nDone!")
-    return totalPercent, outputLink
+    print("\nTracker!")
+    print(tracker)
+    return totalPercent, uniquePercent, outputLink, text, tracker
+    
+# ...........
+# text = "This is some text to highlight"
+# highlighted_text = colored(s, 'red', attrs=['underline', 'bold'])
+# print(highlighted_text)
+
+

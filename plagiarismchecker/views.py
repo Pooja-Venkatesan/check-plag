@@ -15,13 +15,17 @@ def home(request):
 #web search(Text)
 def test(request):
     # print("request is welcome test")
+
     print(request.POST['q'])  
     
     if request.POST['q']: 
-        percent,link = main.findSimilarity(request.POST['q'])
-        percent = round(percent,2)
-    print("Output..!!!",percent,link)
-    return render(request, 'pc/index.html',{'link': link, 'percent': percent})
+        totalPercent, uniquePercent, link, text, tracker= main.findSimilarity(request.POST['q'])
+        uniquePercent = (100-totalPercent)
+        totalPercent = round(totalPercent,2)
+        uniquePercent = round(uniquePercent,2)
+    print("Output..!!!",totalPercent, uniquePercent, link, text, tracker)
+    return render(request, 'pc/index.html',{'totalPercent': totalPercent,'uniquePercent': uniquePercent,'link': link, 'text' : text, 'tracker':tracker})
+    
 
 #web search file(.txt, .docx)
 def filetest(request):
@@ -58,10 +62,14 @@ def filetest(request):
         pdfFileObj.close() 
 
 
-    percent,link = main.findSimilarity(value)
-    print("Output..!!!",percent,link)
-    return render(request, 'pc/index.html',{'link': link, 'percent': percent})
+    totalPercent, uniquePercent, link, text, tracker= main.findSimilarity(value)
+    print("Output..!!! \n",totalPercent, uniquePercent, link, text, tracker )
+    return render(request, 'pc/index.html',{'link': link, 'totalPercent': totalPercent,'uniquePercent':uniquePercent, 'text' : text, 'tracker':tracker})
 
+
+# def report(request):
+#     return render(request, 'pc/report.html')
+# .........Extrinsic.................
 #text compare
 def fileCompare(request):
     return render(request, 'pc/doc_compare.html') 
@@ -98,5 +106,6 @@ def twofilecompare1(request):
 
     result = fileSimilarity.findFileSimilarity(value1,value2)
     
-    print("Output!",result)
+    print("Output! \n",result)
     return render(request, 'pc/doc_compare.html',{'result': result})
+# .................

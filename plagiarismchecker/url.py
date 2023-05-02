@@ -8,6 +8,5 @@ urlpatterns = [
     path('filetest/', views.filetest,name='filetest'),
     path('twofiletest1/', views.twofiletest1,name='twofiletest1'),
     path('twofilecompare1/', views.twofilecompare1,name='twofilecompare1'),
-
     
 ]
