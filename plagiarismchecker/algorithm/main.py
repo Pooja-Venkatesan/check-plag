@@ -143,6 +143,7 @@ def findSimilarity(text):
             totalPercent = totalPercent + percentage
         totalPercent = round(totalPercent, 2)
         uniquePercent = (100 - totalPercent)
+        uniquePercent = round(uniquePercent,2)
         print(link, totalPercent, uniquePercent)
 
     print("count", "numqueries")

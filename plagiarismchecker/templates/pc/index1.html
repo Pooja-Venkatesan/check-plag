@@ -152,7 +152,7 @@ th {
               {% csrf_token %}               
               <textarea style='padding:auto;' oninput="word_checker()" maxlength="" id="text-1" name="q" placeholder="Copy Paste the text here.." required></textarea>
               <p id="ch">1500 Words Remaining </p>
-              <br>
+              <hr>
                 <!-- button input text check plagiarism -->
              
                 <button type="submit" form="form1-ws" id="submit-button-1" class="btn" style="background-color:#6c56e6; font-weight: bold; font-family: Arial, Helvetica, sans-serif; margin: 0 auto;">
@@ -175,7 +175,7 @@ th {
               <p id="file-result"></p>
             {% csrf_token %}
             <input id="id_docfile" required type="file" name="docfile" accept=".doc, .docx, .pdf, .txt"/>
-          
+            <hr>
              <!-- button input text check plagiarism -->
           
              <button type="submit" form="form2-ws" id="submit-button-2" class="btn submit-button-2" style="background-color:#6c56e6; font-weight: bold; margin: 0 auto;">
@@ -194,12 +194,11 @@ th {
           <!-- ...... -->
 
           </div>
-<!-- 198 uncomment.... -->
-          <!-- <form method="POST" action="{% url 'report' %}">
+          <form method="POST" action="{% url 'report' %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{% url 'report' %}">
             <button type="submit" form="form1-ws" id="submit-button-1" class="btn" style="background-color:#56b4e6; font-family: Arial, Helvetica, sans-serif ;font-weight: bold; margin: 0 auto;">Plagiarism Report</button>
-          </form> -->
+          </form>
 
 <!-- <form method="POST" action="{% url 'report' %}">
               {% csrf_token %}
@@ -235,7 +234,7 @@ th {
 
       </div>   -->
     </div>
-    
+    <br>
     <div class="container-fluid result-div" style="margin:100px 0;">
       <div class="row">
         <div style="background-color: #ffffff; border: 1px solid #402ea6; color: rgb(0, 0, 0); font-family: Arial, Helvetica, sans-serif; margin: 0 auto;" class="col-md-6 result-1">
@@ -257,20 +256,19 @@ th {
         <li> {{ text }}</li>    -->
         
       </div>
-      
-     
-      </div>
-      </div>
+      <hr>
       <br>
-      <div class="container" style="margin: 0 auto; text-align: center;"> 
+      <div class="container" style="margin: 50px 20px; text-align: center;"> 
        
-      <h2 style="background-color: #6c56e6; color: #ffffff; margin-top: 100px ;">PLAGIARISM REPORT</h2>
+      <h2 style="background-color: #6c56e6; color: #ffffff; margin: 10px ;">PLAGIARISM REPORT</h2>
         <h3 style="color: #000000;">YOUR INPUT</h3>
         <hr>
         <h5 style="border: #606060;"> {{ text }}</h5> 
        
         <table>
-                <tr>
+      
+             
+              <tr>
                 <th>Similar Text</th>
                 <th>Soruce Links</th>
               </tr>
@@ -288,9 +286,14 @@ th {
           {% endfor %}
           
       </table>
-
-      <br>
-
+      <h2>Total Suspected Plagiarism Score from the document</h2>
+            <h3 style="width:20%"><i style="color:red">{{totalPercent}}%</i></h3>
+              
+          <h2>Unique Score from the document</h2>
+            <h3 style="width:20%"><i style="color:rgb(11, 173, 87)">{{uniquePercent}}%</i></h3>
+     
+      </div>
+      </div>
     </div>
   </div>
     <footer style="background-color: #000000; color: white; margin: 0 auto; padding: 10px 50px;" class="container-fluid d-flex justify-content-between flex-wrap">

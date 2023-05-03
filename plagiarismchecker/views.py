@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import HttpResponse
 from plagiarismchecker.algorithm import main
 from docx import *
@@ -8,8 +9,17 @@ import PyPDF2
 
 # Create your views here.
 #home
+
 def home(request):
-    return render(request, 'pc/index.html') 
+    #    if request.method == 'POST':
+    #     next_url = request.POST.get('next')
+    #     if next_url:
+    #         return redirect(next_url)
+        return render(request, 'pc/index.html') 
+
+
+def report(request):
+    return render(request, 'pc/report.html')
 
 
 #web search(Text)
@@ -67,8 +77,6 @@ def filetest(request):
     return render(request, 'pc/index.html',{'link': link, 'totalPercent': totalPercent,'uniquePercent':uniquePercent, 'text' : text, 'tracker':tracker})
 
 
-# def report(request):
-#     return render(request, 'pc/report.html')
 # .........Extrinsic.................
 #text compare
 def fileCompare(request):
