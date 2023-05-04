@@ -3,24 +3,54 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse
 from plagiarismchecker.algorithm import main
+from plagiarismchecker.algorithm.main import tracker,totalPercent, uniquePercent, outputLink, text
+
 from docx import *
 from plagiarismchecker.algorithm import fileSimilarity
 import PyPDF2 
+
+# from django.shortcuts import redirect
+# from xhtml2pdf import pisa
+# from io import BytesIO
+# from django.template.loader import get_template
+# from django.views import View
 
 # Create your views here.
 #home
 
 def home(request):
-    #    if request.method == 'POST':
-    #     next_url = request.POST.get('next')
-    #     if next_url:
-    #         return redirect(next_url)
-        return render(request, 'pc/index.html') 
+    return render(request, 'pc/index.html')
 
-
+# def home(request):
+#     if None in request.POST:
+#            return render(request, 'pc/index.html')
+    
+#     if 'report-gen' in request.POST:
+                
+#         return render(request, 'pc/report.html')
+# totalPercent, uniquePercent, outputLink, text, tracker= main.findSimilarity(request.POST['q'])
 def report(request):
-    return render(request, 'pc/report.html')
+    links = list(outputLink.keys())
+    scores = [i for i in outputLink.values()]
+    print("\n list of links:", links)
+    return render(request, 'pc/report.html', {'tracker' : tracker, 'links' : links, 'Scores':scores, 'text':text,'totalPercent':totalPercent, 'uniquePercent':uniquePercent})
 
+
+# def render_to_pdf(template_src, context_dict={}):
+# 	template = get_template(template_src)
+# 	html = template.render(context_dict)
+# 	result = BytesIO()
+# 	pdf = pisa.pisaDocument(BytesIO(html.encode("utf8")), result)
+# 	if not pdf.err:
+# 		return HttpResponse(result.getvalue(), content_type='application/pdf')
+# 	return None
+
+# class ViewPDF(View):
+#     def get(self, request, *args, **kwargs):
+#         if request.session.get("check-plag"):
+#             data=request.session.get("check-plag")
+#         pdf = render_to_pdf('pc/report.html', data)
+#         return HttpResponse(pdf, content_type='application/pdf')
 
 #web search(Text)
 def test(request):
@@ -33,8 +63,10 @@ def test(request):
         uniquePercent = (100-totalPercent)
         totalPercent = round(totalPercent,2)
         uniquePercent = round(uniquePercent,2)
-    print("Output..!!!",totalPercent, uniquePercent, link, text, tracker)
-    return render(request, 'pc/index.html',{'totalPercent': totalPercent,'uniquePercent': uniquePercent,'link': link, 'text' : text, 'tracker':tracker})
+    print("\nOutput..!!!",totalPercent, uniquePercent, link, text, tracker)
+    print('\ntext:', text)
+    print('\nlinks:', link)
+    return render(request, 'pc/index.html',{'totalPercent': totalPercent,'uniquePercent': uniquePercent,'links': link, 'text' : text, 'tracker':tracker})
     
 
 #web search file(.txt, .docx)
@@ -71,10 +103,14 @@ def filetest(request):
         # closing the pdf file object 
         pdfFileObj.close() 
 
-
-    totalPercent, uniquePercent, link, text, tracker= main.findSimilarity(value)
-    print("Output..!!! \n",totalPercent, uniquePercent, link, text, tracker )
-    return render(request, 'pc/index.html',{'link': link, 'totalPercent': totalPercent,'uniquePercent':uniquePercent, 'text' : text, 'tracker':tracker})
+    
+    totalPercent, uniquePercent, outputLink, text, tracker= main.findSimilarity(value)
+    print("Output..!!! \n",totalPercent, uniquePercent, outputLink, text, tracker )
+    # links = list(outputLink.keys())
+    # scores = list(outputLink.values())
+    # print("\n list of links:", links)
+    # print("\n scores:", scores)
+    return render(request, 'pc/index.html',{'outputLink': outputLink, 'totalPercent': totalPercent,'uniquePercent':uniquePercent, 'text' : text, 'tracker':tracker})
 
 
 # .........Extrinsic.................

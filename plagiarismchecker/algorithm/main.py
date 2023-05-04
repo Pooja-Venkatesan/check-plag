@@ -7,7 +7,7 @@ from termcolor import colored
 
 # Given a text string, remove all non-alphanumeric
 # characters (using Unicode definition of alphanumeric).
-
+text = ''
 def getQueries(text, n):
     sentenceEnders = re.compile("['.,()/!?]")
     sentenceList = sentenceEnders.split(text)
@@ -90,6 +90,10 @@ def getQueries(text, n):
 #     print("\nDone!")
 #     return totalPercent, outputLink, websiteMatches, text
 
+tracker ={}
+totalPercent = 0
+uniquePercent = 0
+outputLink = {}
 def findSimilarity(text):
     # n-grams N VALUE SET HERE
     n = 15
@@ -146,6 +150,8 @@ def findSimilarity(text):
         uniquePercent = round(uniquePercent,2)
         print(link, totalPercent, uniquePercent)
 
+        print("\n OUTPUT LINKS:\t", outputLink)
+
     print("count", "numqueries")
     print(count, numqueries)
     # print("totalPercent","uniquePercent", "outputLink")
@@ -153,7 +159,10 @@ def findSimilarity(text):
     print("\nDone!")
     print("\nTracker!")
     print(tracker)
+    
     return totalPercent, uniquePercent, outputLink, text, tracker
+
+
     
 # ...........
 # text = "This is some text to highlight"
